@@ -1,5 +1,5 @@
 import { Timeline } from "./ui/timeline.tsx";
-import { forwardRef } from "react";
+import { useState, forwardRef } from "react";
 
 interface ContentType {
     title: string;
@@ -30,10 +30,40 @@ const Data: ContentType[] = [
 ];
 
 const HowitWorksMobile = forwardRef<HTMLElement>((_, ref) => {
+    const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  
+    // Handle image click to play video
+    const handleVideoClick = () => {
+      setIsVideoPlaying(true);
+    };
   return (
   <>
     <section ref={ref} className="block md:hidden w-full">
       <Timeline data={Data} />
+      <div
+        className="w-[80%] max-w-[720px] mx-auto"
+        data-aos="zoom-out"
+      >
+        {/* Clickable video image */}
+        {!isVideoPlaying ? (
+          <img
+            src="/Video.png"
+            alt="video_img"
+            className="translate-y-[-60px] cursor-pointer w-full h-auto animate-floating"
+            onClick={handleVideoClick}
+          />
+        ) : (
+          // Display video in place of image when clicked
+          <iframe
+            width="100%"
+            height="400"
+            src="/-034a-434f-ab20-1f24ac408882.mp4"
+            frameBorder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        )}
+      </div>
     </section>
   </>
   );
